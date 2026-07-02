@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rudra Cafe & Restaurant</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Marcellus&family=Jost:wght@300;400;500&display=swap');
+
+  :root{
+    --ink:#0e0d0c;
+    --char:#161412;
+    --char2:#1e1b18;
+    --gold:#d4af37;
+    --gold-soft:#e8c96b;
+    --cream:#efe6d3;
+    --ember:#7a3b1e;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Cinzel', serif; color:var(--gold-soft); letter-spacing:1px;}
+
+  /* subtle bulb-light texture background */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(212,175,55,0.06), transparent 40%),
+      radial-gradient(circle at 85% 10%, rgba(212,175,55,0.05), transparent 35%),
+      radial-gradient(circle at 50% 90%, rgba(122,59,30,0.08), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 6%;
+    background:linear-gradient(to bottom, rgba(14,13,12,0.9), transparent);
+  }
+  .brand{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:1.3rem;
+    color:var(--gold-soft);
+    letter-spacing:3px;
+  }
+  nav a{
+    color:var(--cream);
+    text-decoration:none;
+    font-size:0.85rem;
+    letter-spacing:2px;
+    margin-left:32px;
+    text-transform:uppercase;
+    opacity:0.8;
+    transition:opacity .3s;
+  }
+  nav a:hover{opacity:1; color:var(--gold-soft);}
+  .navlinks{display:flex; align-items:center;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    height:100vh;
+    min-height:600px;
+    display:flex;
+    align-items:flex-end;
+    background:linear-gradient(180deg, rgba(10,9,8,0.35) 0%, rgba(10,9,8,0.55) 55%, var(--ink) 100%), url('images/exterior.png') center 30%/cover no-repeat;
+  }
+  .hero-content{
+    position:relative;
+    z-index:2;
+    padding:0 6% 8%;
+    max-width:800px;
+  }
+  .eyebrow{
+    color:var(--gold);
+    font-size:0.8rem;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    display:block;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    line-height:1.02;
+    margin-bottom:18px;
+  }
+  .hero p{
+    font-family:'Marcellus', serif;
+    font-size:1.15rem;
+    color:var(--cream);
+    opacity:0.85;
+    max-width:520px;
+    margin-bottom:34px;
+  }
+  .btn{
+    display:inline-block;
+    border:1px solid var(--gold);
+    color:var(--gold-soft);
+    padding:14px 34px;
+    font-size:0.85rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    text-decoration:none;
+    transition:all .35s;
+    margin-right:16px;
+  }
+  .btn:hover{background:var(--gold); color:var(--ink);}
+  .btn.filled{background:var(--gold); color:var(--ink);}
+  .btn.filled:hover{background:transparent; color:var(--gold-soft);}
+
+  /* trishul divider */
+  .divider{
+    display:flex; align-items:center; justify-content:center;
+    gap:18px;
+    margin:0 auto 50px;
+    color:var(--gold);
+    opacity:0.7;
+  }
+  .divider .line{width:60px; height:1px; background:var(--gold); opacity:0.5;}
+  .divider svg{width:26px; height:26px;}
+
+  section{position:relative; z-index:1; padding:110px 6%;}
+  .section-head{text-align:center; margin-bottom:20px;}
+  .section-head .eyebrow{text-align:center;}
+  .section-head h2{font-size:clamp(2rem,4vw,2.8rem);}
+
+  /* ABOUT */
+  .about{
+    max-width:720px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .about p{
+    font-size:1.05rem;
+    line-height:1.9;
+    color:var(--cream);
+    opacity:0.82;
+  }
+
+  /* MENU */
+  .menu-wrap{max-width:960px; margin:0 auto;}
+  .menu-tag{
+    text-align:center;
+    color:var(--gold);
+    font-family:'Marcellus', serif;
+    font-size:1.05rem;
+    margin-bottom:60px;
+    opacity:0.9;
+  }
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:0;
+    border-top:1px solid rgba(212,175,55,0.25);
+  }
+  .menu-item{
+    padding:26px 10px;
+    border-bottom:1px solid rgba(212,175,55,0.25);
+    border-right:1px solid rgba(212,175,55,0.25);
+  }
+  .menu-item h3{
+    font-size:1.05rem;
+    color:var(--gold-soft);
+    margin-bottom:6px;
+    font-family:'Marcellus', serif;
+    font-weight:400;
+  }
+  .menu-item .price{
+    color:var(--gold);
+    font-family:'Cinzel',serif;
+    font-size:1.4rem;
+    display:block;
+    margin-bottom:8px;
+  }
+  .menu-item p{font-size:0.85rem; opacity:0.65; line-height:1.5;}
+
+  /* GALLERY / AMBIENCE */
+  .ambience{
+    background:var(--char);
+    padding:0;
+  }
+  .amb-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    min-height:520px;
+  }
+  .amb-img{
+    background:url('images/exterior.png') center/cover no-repeat;
+  }
+  .amb-text{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:70px 60px;
+  }
+  .amb-text .eyebrow{text-align:left;}
+  .amb-text h2{font-size:2.2rem; margin-bottom:20px;}
+  .amb-text p{opacity:0.8; line-height:1.85; font-size:1rem; margin-bottom:14px;}
+  @media (max-width:800px){
+    .amb-grid{grid-template-columns:1fr;}
+    .amb-img{height:320px;}
+    .amb-text{padding:50px 8%;}
+  }
+
+  /* CONTACT */
+  .contact{
+    text-align:center;
+    background:var(--char2);
+  }
+  .contact-grid{
+    max-width:700px;
+    margin:50px auto 0;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:50px;
+  }
+  .contact-item{min-width:220px;}
+  .contact-item h3{
+    font-size:0.75rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:10px;
+    font-family:'Jost', sans-serif;
+    font-weight:500;
+  }
+  .contact-item a, .contact-item span{
+    color:var(--cream);
+    font-family:'Marcellus', serif;
+    font-size:1.15rem;
+    text-decoration:none;
+    opacity:0.9;
+  }
+  .contact-item a:hover{color:var(--gold-soft);}
+
+  footer{
+    text-align:center;
+    padding:34px 6%;
+    font-size:0.75rem;
+    letter-spacing:2px;
+    color:var(--gold);
+    opacity:0.5;
+    border-top:1px solid rgba(212,175,55,0.15);
+  }
+
+  .wa-float{
+    position:fixed;
+    bottom:26px; right:26px;
+    z-index:60;
+    background:var(--gold);
+    color:var(--ink);
+    width:56px; height:56px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    text-decoration:none;
+    box-shadow:0 6px 22px rgba(212,175,55,0.4);
+    transition:transform .3s;
+  }
+  .wa-float:hover{transform:scale(1.08);}
+
+  @media(max-width:700px){
+    .navlinks a:not(:last-child){display:none;}
+    nav a{margin-left:0;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">RUDRA</div>
+  <div class="navlinks">
+    <a href="#menu">Menu</a>
+    <a href="#ambience">Ambience</a>
+    <a href="#contact">Visit Us</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">Cafe &amp; Restaurant · Hyderabad</span>
+    <h1>Rudra</h1>
+    <p>Where warm lights, good food, and long evenings meet. A rooftop-style hangout built for chai runs, dinner dates, and everything in between.</p>
+    <a href="#menu" class="btn filled">View Menu</a>
+    <a href="#contact" class="btn">Find Us</a>
+  </div>
+</section>
+
+<section class="about">
+  <div class="section-head">
+    <span class="eyebrow">The Story</span>
+    <h2>Named After the Storm</h2>
+  </div>
+  <p>Rudra takes its name and its trident from the fierce, formless energy of the divine — bold, warm, and a little untamed. We built a space with string lights, open-air seating, and a menu that doesn't take itself too seriously, so you can come for a coffee and stay for the night.</p>
+</section>
+
+<div class="divider">
+  <span class="line"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2v20M12 6c-3 0-4-3-4-4M12 6c3 0 4-3 4-4M8 8c-3 1-3 5 0 6M16 8c3 1 3 5 0 6"/></svg>
+  <span class="line"></span>
+</div>
+
+<section id="menu" class="menu-wrap">
+  <div class="section-head">
+    <span class="eyebrow">On The Table</span>
+    <h2>Menu Highlights</h2>
+  </div>
+  <p class="menu-tag">Great taste, easy on the pocket — everyday prices, no compromises.</p>
+  <div class="menu-grid">
+    <div class="menu-item">
+      <span class="price">₹99</span>
+      <h3>Masala Chai</h3>
+      <p>Classic hand-brewed chai, served hot all day.</p>
+    </div>
+    <div class="menu-item">
+      <span class="price">₹149</span>
+      <h3>Cold Coffee</h3>
+      <p>Rich, frothy, and made fresh to order.</p>
+    </div>
+    <div class="menu-item">
+      <span class="price">₹179</span>
+      <h3>Veg Momos</h3>
+      <p>Steamed or fried, served with house chutney.</p>
+    </div>
+    <div class="menu-item">
+      <span class="price">₹249</span>
+      <h3>Paneer Tikka</h3>
+      <p>Charred, smoky, straight off the grill.</p>
+    </div>
+    <div class="menu-item">
+      <span class="price">₹199</span>
+      <h3>Loaded Fries</h3>
+      <p>Peri-peri or cheese burst, your call.</p>
+    </div>
+    <div class="menu-item">
+      <span class="price">₹299</span>
+      <h3>Chicken Biryani</h3>
+      <p>Slow-cooked, generous portions, served hot.</p>
+    </div>
+    <div class="menu-item">
+      <span class="price">₹129</span>
+      <h3>Waffles</h3>
+      <p>Belgian waffle with chocolate or honey drizzle.</p>
+    </div>
+    <div class="menu-item">
+      <span class="price">₹349</span>
+      <h3>Rooftop Combo</h3>
+      <p>Starter + main + drink — our best value pick.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ambience" class="ambience">
+  <div class="amb-grid">
+    <div class="amb-img"></div>
+    <div class="amb-text">
+      <span class="eyebrow">The Setting</span>
+      <h2>Lights On, Doors Open</h2>
+      <p>Two open levels, string lights overhead, and a look that changes completely once the sun goes down. Rudra is built for evenings — low music, warm bulbs, and a mix of open and covered seating.</p>
+      <p>Whether it's a quick coffee or a full dinner with friends, the space is designed to slow you down a little.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="section-head">
+    <span class="eyebrow">Get In Touch</span>
+    <h2>Visit Rudra</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <h3>Call / WhatsApp</h3>
+      <a href="tel:6281238410">6281238410</a>
+    </div>
+    <div class="contact-item">
+      <h3>Email</h3>
+      <a href="mailto:caferudrahyd@gmail.com">caferudrahyd@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <h3>Hours</h3>
+      <span>11 AM – 11 PM · Daily</span>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 RUDRA CAFE &amp; RESTAURANT · HYDERABAD</footer>
+
+<a class="wa-float" href="https://wa.me/916281238410" target="_blank" title="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="#0e0d0c"><path d="M12.04 2c-5.5 0-10 4.5-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38a9.94 9.94 0 0 0 4.79 1.22h.01c5.5 0 10-4.5 10-10s-4.5-10-10.01-10zm5.86 14.3c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.13.11-1.82-.12-.42-.14-.96-.3-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.14-.19-1.19-1.58-1.19-3.02 0-1.44.75-2.14 1.02-2.44.26-.29.58-.36.77-.36h.55c.18 0 .42-.03.65.5.24.55.8 1.9.87 2.04.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.27.37-.22.62-.13.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+</a>
+
+</body>
+</html>
